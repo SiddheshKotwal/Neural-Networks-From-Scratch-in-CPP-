@@ -6,17 +6,17 @@
             "type": "shell",
             "command": "g++",
             "args": [
-                "-I", "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2024.2\\include", // Include path for MKL
-                "-I", "F:/Codes/Neural Networks From Scratch/model_object/Neural Networks from scratch in C++/eigen-3.4.0", // Include path for Eigen
-                "-L", "C:\\Program Files (x86)\\Intel\\oneAPI\\mkl\\2024.2\\lib\\intel64", // Library path for MKL
-                "-m64", // Compile for 64-bit
-                "-o", "my_program.exe", // Output executable
-                "*.cpp", // Specify the source directory or list files explicitly
-                "-lmkl_intel_lp64", // Link MKL libraries
+                "-I", "C:/Program Files (x86)/Intel/oneAPI/mkl/2024.2/include",
+                "-I", "F:/Codes/Neural Networks From Scratch/model_object/Neural Networks from scratch in C++/eigen-3.4.0",
+                "-L", "C:/Program Files (x86)/Intel/oneAPI/mkl/2024.2/lib/intel64",
+                "-m64",
+                "-o", "my_program.exe",
+                "${workspaceFolder}/**/*.cpp", // Include all .cpp files
+                "-lmkl_intel_lp64",
                 "-lmkl_core",
                 "-lmkl_intel_thread",
-                "-lpthread", // Link pthread
-                "-fopenmp" // Enable OpenMP
+                "-lpthread",
+                "-fopenmp"
             ],
             "group": {
                 "kind": "build",
