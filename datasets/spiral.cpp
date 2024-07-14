@@ -1,5 +1,5 @@
 void create_data(MatrixXd& X, VectorXd& y, long long samples, int classes) {
-    
+
     X.resize(samples * classes, 2);
     y.resize(samples * classes);
 
@@ -9,8 +9,8 @@ void create_data(MatrixXd& X, VectorXd& y, long long samples, int classes) {
 
     #pragma omp parallel for
     for (size_t i = 0; i < classes; i++) {
+        
         VectorXd random_numbers(samples);
-
         for (size_t j = 0; j < samples; ++j)
             random_numbers(j) = distribution(generator) * 0.2;
 

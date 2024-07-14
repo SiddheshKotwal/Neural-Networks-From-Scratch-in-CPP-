@@ -1,7 +1,5 @@
 #include "commonIncludes.h"
-#include "matplotlibcpp.h"
 #include "datasets/spiral.cpp"
-namespace plt = matplotlibcpp;
 
 // ctrl + shift + B to compile and ./run_my_app to execute
 

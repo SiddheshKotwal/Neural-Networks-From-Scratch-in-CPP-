@@ -9,6 +9,8 @@
 #include <Eigen/Dense>
 #include <mkl.h>
 #include <omp.h>
+#include "matplotlibcpp.h"
+namespace plt = matplotlibcpp;
 using namespace std;
 using namespace Eigen;
 
