@@ -20,9 +20,6 @@ class Loss{
     }
 
     double calculate(VectorXd& output){
-        
-        double mean_loss;
-        mkl_dasum(output.size(), output.data(), 1, &mean_loss);
-        return mean_loss / output.size();
+        return output.mean();
     }
 };

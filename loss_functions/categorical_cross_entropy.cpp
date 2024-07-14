@@ -1,3 +1,5 @@
+#include "loss.cpp"
+
 class Loss_CategoricalCrossentropy : public Loss{
     public:
     MatrixXd dinputs;
