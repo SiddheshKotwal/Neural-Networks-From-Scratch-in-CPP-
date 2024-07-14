@@ -1,0 +1,11 @@
+{
+    "C_Cpp.default.includePath": [
+        "F:/Codes/Neural Networks From Scratch/model_object/Neural Networks from scratch in C++/eigen-3.4.0", // Eigen include
+        "C:/Program Files (x86)/Intel/oneAPI/mkl/latest/include", // MKL include (latest)
+        "C:/Program Files (x86)/Intel/oneAPI/mkl/2024.2/include", // MKL specific version
+        "${workspaceFolder}/**" // Current workspace
+    ],
+    "C_Cpp.default.defines": [
+        "_USE_MKL_" // Define for MKL
+    ]
+}
