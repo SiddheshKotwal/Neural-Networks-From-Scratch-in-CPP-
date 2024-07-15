@@ -1,4 +1,17 @@
-#include<cmath>
+#ifndef Sigmoid
+#define Sigmoid
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
 using namespace std;
 
 class Activation_Sigmoid{
@@ -27,3 +40,5 @@ class Activation_Sigmoid{
         }
     }
 };
+
+#endif

@@ -1,6 +1,17 @@
-#include <cmath>
+#ifndef spiral
+#define spiral
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
 #include <random>
+#include <omp.h>
 using namespace std;
 
 void spiral_data(vector<vector<double>>& X, vector<double>& y, long long samples, int classes){
@@ -33,3 +44,5 @@ void spiral_data(vector<vector<double>>& X, vector<double>& y, long long samples
         }
     }
 }
+
+#endif

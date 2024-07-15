@@ -1,5 +1,17 @@
-#include <algorithm>
+#ifndef Softmax
+#define Softmax
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
 #include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
 using namespace std;
 
 // Theory:
@@ -95,3 +107,5 @@ class Activation_Softmax{
         }
     }
 };
+
+#endif

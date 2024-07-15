@@ -1,4 +1,18 @@
-#include "loss_functions.cpp"
+#ifndef mean_absolute_error
+#define mean_absolute_error
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 // This function, used as a loss, penalizes the error linearly. It produces sparser results and is robust
 // to outliers, which can be both advantageous and disadvantageous. In reality, L1 (MAE) loss is
@@ -19,11 +33,11 @@ class Loss_MeanAboluteError : public Loss{
 
         for(int i = 0; i < y_pred.size(); i++){
             for(int j = 0; j < y_pred[0].size(); j++)
-                sample_losses[i] += abs(y_true[i][j] - y_pred[i][j]);
-            sample_losses[i] /= y_pred[0].size(); 
+                samples_losses[i] += abs(y_true[i][j] - y_pred[i][j]);
+            samples_losses[i] /= y_pred[0].size(); 
         }
 
-        return sample_losses;
+        return samples_losses;
     }
 
     void backward(vector<vector<double>>& dvalues, vector<vector<double>>& y_true){
@@ -39,3 +53,5 @@ class Loss_MeanAboluteError : public Loss{
         }
     }
 };
+
+#endif

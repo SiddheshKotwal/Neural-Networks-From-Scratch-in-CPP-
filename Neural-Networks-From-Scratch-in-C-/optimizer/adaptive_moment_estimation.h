@@ -1,4 +1,18 @@
-#include<cmath>
+#ifndef adaptive_moment_estimation
+#define adaptive_moment_estimation
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 class Optimizer_Adam{
     
@@ -90,3 +104,5 @@ class Optimizer_Adam{
         this->iterations++;
     }
 };
+
+#endif

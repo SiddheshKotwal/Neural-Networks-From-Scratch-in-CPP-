@@ -1,13 +1,4 @@
-#include <iostream>
-#include <omp.h>
-#include <vector>
-#include "datasets/vertical.cpp"
-#include "datasets/spiral.cpp"
-#include "dense_layer.cpp"
-#include "helper_functions.cpp"
-#include "activation_functions/ReLU.cpp"
-#include "activation_functions/Softmax.cpp"
-#include "loss_functions/categorical_cross_entropy.cpp"
+#include "common_includes.h"
 
 // Applying Random weights and finding the minimum loss and maximum accuracy to get better fit for neural network
 // First applying directly random weights and biases for all layers neurons we are barely able to improve the performance
@@ -34,6 +25,7 @@ int main(){
 
     // Create Loss Function
     CategoricalCrossentropyLoss loss_funcions;
+    Accuracy_Categorical accuracy;
 
     // Helper Variables
     double lowest_loss = 9999999; // some initial value
@@ -78,7 +70,7 @@ int main(){
 
         // Calculate accuracy from output of activation2 and targets
         // calculate values along first axis
-        double accuracy_ = accuracy(activation2.output, y);
+        double accuracy_ = accuracy.calculate(activation2.output, y);
 
         // If loss is smaller - print and save weights and biases aside
         if(loss < lowest_loss){

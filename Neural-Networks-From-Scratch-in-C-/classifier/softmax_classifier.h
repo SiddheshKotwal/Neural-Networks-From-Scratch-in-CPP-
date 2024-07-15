@@ -1,4 +1,17 @@
+#ifndef softmax_classifier
+#define softmax_classifier
+
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
 using namespace std;
 
 class Activation_Softmax_Loss_CategoricalCrossentropy{
@@ -40,3 +53,5 @@ class Activation_Softmax_Loss_CategoricalCrossentropy{
         }
     }
 };
+
+#endif

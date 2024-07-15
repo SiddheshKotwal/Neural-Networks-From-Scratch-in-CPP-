@@ -1,22 +1,4 @@
-#include <iostream>
-#include <omp.h>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include "datasets/spiral.cpp"
-#include "datasets/vertical.cpp"
-#include "dropout_layer.cpp"
-#include "dense_layer.cpp"
-#include "helper_functions.cpp"
-#include "activation_functions/ReLU.cpp"
-#include "activation_functions/Softmax.cpp"
-#include "loss_functions/categorical_cross_entropy.cpp"
-#include "classifier/softmax_classifier.cpp"
-#include "optimizer/stochastic_gradient_descent.cpp"
-#include "optimizer/adaptive_gradient.cpp"
-#include "optimizer/root_mean_square_propagation.cpp"
-#include "optimizer/adaptive_moment_estimation.cpp"
-using namespace std;
+#include "common_includes.h"
 
 // Classification neural network
 
@@ -57,6 +39,7 @@ int main(){
     // Optimizer_Adagrad optimizer(1.0, 1e-4);
     // Optimizer_RMSprop optimizer(0.02, 1e-5);
     Optimizer_Adam optimizer(0.005, 5e-7);
+    Accuracy_Categorical accuracy;
 
     // Each full pass through all of the training data is called an epoch
     long long epoch = 10001;
@@ -81,7 +64,7 @@ int main(){
         double loss = data_loss + reg_loss;
 
         // Calculate accuracy from output of activation2 and targets
-        double accuracy_ = accuracy(loss_activation.output, y);
+        double accuracy_ = accuracy.calculate(loss_activation.output, y);
 
         if(!(i % 100)) cout<<"epoch: "<<i<<", acc: "<<accuracy_<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
         // lower loss is not always associated with higher accuracy
@@ -129,8 +112,7 @@ int main(){
     double data_loss = loss_activation.forward(dense2.output, y_test);
     double reg_loss = loss_activation.loss_function.regularization_loss(dense1) + loss_activation.loss_function.regularization_loss(dense2);
     double loss = data_loss + reg_loss;
-    
-    double val_accuracy = accuracy(loss_activation.output, y_test);
+    double val_accuracy = accuracy.calculate(loss_activation.output, y_test);
     cout<<"Validation, acc: "<<val_accuracy<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<"\n";
     
     return 0;

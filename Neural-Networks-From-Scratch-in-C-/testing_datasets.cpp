@@ -1,12 +1,4 @@
-#include "matplotlibcpp.h"
-#include <iostream>
-#include <cstdlib>
-#include "datasets/spiral.cpp"
-#include "datasets/vertical.cpp"
-#include <cmath>
-#include <vector>
-using namespace std;
-namespace plt = matplotlibcpp;
+#include "common_includes.h"
 
 // Run Command:
 // g++ testing_datasets.cpp -I "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\Include" -I "c:\users\lenovo\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages\numpy\core\include" -L "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\libs" -I "C:\mingw64\mingw64\bin" -lPython39

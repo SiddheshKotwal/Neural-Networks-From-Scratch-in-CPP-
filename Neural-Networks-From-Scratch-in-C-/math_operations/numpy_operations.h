@@ -1,4 +1,17 @@
+#ifndef numpy_operations
+#define numpy_operations
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
 #include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 class numpy {
 public:
@@ -179,3 +192,5 @@ public:
         return sqrt(variance);
     }
 };
+
+#endif

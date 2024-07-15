@@ -1,4 +1,18 @@
-#include "loss_functions.cpp"
+#ifndef categorical_cross_entropy
+#define categorical_cross_entropy
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 class CategoricalCrossentropyLoss : public Loss{
 
@@ -61,3 +75,5 @@ class CategoricalCrossentropyLoss : public Loss{
             this->dinputs[i][y_true[i]] = this->dinputs[i][y_true[i]] / dvalues.size();
     }
 };
+
+#endif

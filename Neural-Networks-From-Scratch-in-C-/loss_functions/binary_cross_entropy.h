@@ -1,4 +1,18 @@
-#include "loss_functions.cpp"
+#ifndef binary_cross_entropy
+#define binary_cross_entropy
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 class Loss_BinaryCrossentropy : public Loss{
     public:
@@ -53,3 +67,5 @@ class Loss_BinaryCrossentropy : public Loss{
         }
     }
 };
+
+#endif

@@ -1,4 +1,18 @@
-#include "loss_functions.cpp"
+#ifndef mean_squared_error
+#define mean_squared_error
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 // The two main methods for calculating error in regression are mean squared error (MSE) and mean absolute error (MAE).
 // MSE : L(i) = 1 / J * (Sum(j) (y(i, j) - y_hat(i, j)) ^ 2)
@@ -32,3 +46,5 @@ class Loss_MeanSquaredError : public Loss{  // L2 loss
         }
     }
 };
+
+#endif

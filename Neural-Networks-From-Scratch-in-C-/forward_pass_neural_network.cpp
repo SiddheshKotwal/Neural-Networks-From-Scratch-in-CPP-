@@ -1,17 +1,31 @@
-#include <iostream>
-#include <omp.h>
-#include <vector>
-#include "datasets/spiral.cpp"
-#include "dense_layer.cpp"
-#include "helper_functions.cpp"
-#include "activation_functions/ReLU.cpp"
-#include "activation_functions/Softmax.cpp"
-#include "loss_functions/categorical_cross_entropy.cpp"
-#include "classifier/softmax_classifier.cpp"
-#include "optimizer/stochastic_gradient_descent.cpp"
-using namespace std;
+#include "common_includes.h"
 
 // Use y_true label as just a vector not matrix because of the functions defined for vector not matrix of y_true label
+
+
+// Printing Matrix
+void print(vector<vector<double>>& matrix) {
+    for (auto i : matrix) {
+        for (auto j : i) cout << j << " ";
+        cout << "\n";
+    }
+    cout << "\n";
+}
+
+void print(vector<vector<double>>& matrix, string str) {
+    cout << str << ":\n";
+    for (auto i : matrix) {
+        for (auto j : i) cout << j << " ";
+        cout << "\n";
+    }
+    cout << "\n";
+}
+
+// Function overloaded for printing vector
+void print(vector<double>& vec) {
+    for (auto i : vec) cout << i << " ";
+    cout << "\n";
+}
 
 int main(){
 
@@ -68,7 +82,8 @@ int main(){
     cout<< "Mean Loss: " << average_loss <<"\n";
 
     // Calculating Accuracy of the neural network
-    double accuracy_ = accuracy(loss_activation.output, y);
+    Accuracy_Categorical accuracy;
+    double accuracy_ = accuracy.calculate(loss_activation.output, y);
     cout<< "Accuracy: " << accuracy_ << "\n" ;
 
     // Backward pass

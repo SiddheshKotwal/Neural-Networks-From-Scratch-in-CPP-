@@ -1,3 +1,19 @@
+#ifndef Linear
+#define Linear
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
+
 class Activation_Linear{
     public:
     vector<vector<double>> inputs, output, dinputs;
@@ -15,3 +31,5 @@ class Activation_Linear{
         this->dinputs = dvalues;
     }
 };
+
+#endif

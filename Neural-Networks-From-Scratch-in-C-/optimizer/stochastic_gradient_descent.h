@@ -1,3 +1,19 @@
+#ifndef stochastic_gradient_descent
+#define stochastic_gradient_descent
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
+
 class Optimizer_SGD{
     
     public:
@@ -73,3 +89,5 @@ class Optimizer_SGD{
         this->iterations++;
     }
 };
+
+#endif

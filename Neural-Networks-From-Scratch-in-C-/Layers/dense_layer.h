@@ -1,9 +1,18 @@
-#include <random>
-#include "math_operations/numpy_operations.cpp"
+#ifndef dense_layer
+#define dense_layer
 
-// Generating random numbers from gaussian distribution of mean 0 and variance 1 -> (-1, 1)
-mt19937 rng(0); // seed 0
-normal_distribution<> dist(0, 1); // mean = 0, var = 1
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
 
 // Dense Layer (Layer in which all neurons from previous / input layer are connected with all the neurons of current layer (eg. like complete graph))
 class Layer_Dense{
@@ -58,6 +67,10 @@ class Layer_Dense{
             Glorot & Bengio, AISTATS 2010
             http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf
         */
+
+        // Generating random numbers from gaussian distribution of mean 0 and variance 1 -> (-1, 1)
+        mt19937 rng(0); // seed 0
+        normal_distribution<> dist(0, 1); // mean = 0, var = 1
 
         // setting random weights for the neurons by taking random number from gaussian distribution
         for(int i = 0; i < weights.size(); i++){
@@ -140,3 +153,5 @@ class Layer_Dense{
         // Dimensions of dinputs will be same as of dimensions of inputs matrix to this layer or output matrix of previous layer
     }
 };
+
+#endif

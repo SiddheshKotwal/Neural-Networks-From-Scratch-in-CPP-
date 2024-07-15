@@ -1,4 +1,17 @@
-#include<random>
+#ifndef dropout_layer
+#define dropout_layer
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
 using namespace std;
 
 // Dropout:
@@ -57,3 +70,5 @@ class Layer_Dropout{
         }
     }
 };
+
+#endif

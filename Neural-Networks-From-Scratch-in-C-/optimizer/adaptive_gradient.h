@@ -1,19 +1,32 @@
-#include<cmath>
+#ifndef adaptive_gradient
+#define adaptive_gradient
 
-class Optimizer_RMSprop{
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
+#include <random>
+#include <omp.h>
+using namespace std;
+
+class Optimizer_Adagrad{
     
     public:
-    double learning_rate, current_learning_rate, decay, epsilon, rho;
+    double learning_rate, current_learning_rate, decay, epsilon;
     long long iterations;
     
     // Initialize optimizer - set settings
-    Optimizer_RMSprop(double learning_rate = 0.001, double decay = 0.0, double epsilon = 1e-7, double rho = 0.9){
+    Optimizer_Adagrad(double learning_rate = 1.0, double decay = 0.0, double epsilon = 1e-7){
         this->learning_rate = learning_rate;
         this->current_learning_rate = learning_rate;
         this->decay = decay;
         this->iterations = 0;
         this->epsilon = epsilon;
-        this->rho = rho;
     }
 
     // Call once before any parameter updates
@@ -29,12 +42,12 @@ class Optimizer_RMSprop{
         // Update cache with squared current gradients
         for(int i = 0; i < layer.weights.size(); i++){
             for(int j = 0; j < layer.weights[0].size(); j++){
-                layer.weight_cache[i][j] = this->rho * layer.weight_cache[i][j] + (1 - this->rho) * layer.dweights[i][j] * layer.dweights[i][j];
+                layer.weight_cache[i][j] += layer.dweights[i][j] * layer.dweights[i][j];
             }
         }
 
         for(int i = 0; i < layer.biases[0].size(); i++)
-            layer.bias_cache[0][i] = this->rho * layer.bias_cache[0][i] + (1 - this->rho) * layer.dbiases[0][i] * layer.dbiases[0][i];
+            layer.bias_cache[0][i] += layer.dbiases[0][i] * layer.dbiases[0][i];
 
         // Vanilla SGD parameter update + normalization
         // with square rooted cache
@@ -52,3 +65,5 @@ class Optimizer_RMSprop{
         this->iterations++;
     }
 };
+
+#endif

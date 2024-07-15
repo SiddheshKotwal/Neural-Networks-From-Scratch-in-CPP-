@@ -1,6 +1,17 @@
-#include <cmath>
+#ifndef vertical
+#define vertical
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include <cstdlib>
+#include <vector>
+#include <cmath>
+#include <algorithm>
+#include <numeric>
 #include <random>
+#include <omp.h>
 using namespace std;
 
 // Generating random numbers from gaussian distribution of mean 0 and variance 1 -> (-1, 1)
@@ -21,3 +32,5 @@ void vertical_data(vector<vector<double>>& X, vector<double>& y, long long sampl
         }
     }
 }
+
+#endif

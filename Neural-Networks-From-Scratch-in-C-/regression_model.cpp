@@ -1,22 +1,15 @@
-#include <iostream>
-#include <vector>
-#include <omp.h>
-#include <cmath>
-#include "matplotlibcpp.h"
-#include "datasets/sine.cpp"
-#include "dense_layer.cpp"
-#include "helper_functions.cpp"
-#include "activation_functions/ReLU.cpp"
-#include "activation_functions/Softmax.cpp"
-#include "activation_functions/Linear.cpp"
-#include "loss_functions/mean_squared_error.cpp"
-#include "optimizer/adaptive_moment_estimation.cpp"
-using namespace std;
-namespace plt = matplotlibcpp;
+#include "common_includes.h"
 
 // Commands to run this code:
 // g++ regression_model.cpp -I "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\Include" -I "c:\users\lenovo\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages\numpy\core\include" -L "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\libs" -I "C:\mingw64\mingw64\bin" -lPython39
 // ./run_my_app
+
+vector<double> get_vector(vector<vector<double>>& vec) {
+    vector<double> result(vec.size(), 0);
+    for (int i = 0; i < vec.size(); i++)
+        result[i] = vec[i][0];
+    return result;
+}
 
 int main(){
 
@@ -30,7 +23,8 @@ int main(){
     Layer_Dense dense3(64, 1);
     Activation_Linear activation3;
     Loss_MeanSquaredError loss_function;
-    Optimizer_Adam optimizer(0.001, 5e-7);   // lr = 0.005 -> 89 % accuracy
+    Optimizer_Adam optimizer(0.005, 5e-7);   // lr = 0.005 -> 89 % accuracy
+    Accuracy_Regression accuracy;
     
     // jumping back and forth in accuracy during neural network training can indicate that the learning rate might be too high. 
     // A high learning rate can cause the model to make large updates to the weights, leading to instability in the training process.
@@ -65,7 +59,7 @@ int main(){
         // To calculate it we're taking absolute difference between
         // predictions and ground truth values and compare if differences
         // are lower than given precision value
-        double acc = regression_accuracy(activation3.output, y);
+        double acc = accuracy.calculate(activation3.output, y);
         if(!(i % 100)) cout<<"epoch: "<<i<<", acc: "<<acc<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
 
         // Backward pass
