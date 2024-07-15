@@ -23,7 +23,7 @@ int main(){
     Layer_Dense dense3(64, 1);
     Activation_Linear activation3;
     Loss_MeanSquaredError loss_function;
-    Optimizer_Adam optimizer(0.005, 5e-7);   // lr = 0.005 -> 89 % accuracy
+    Optimizer_Adam optimizer(0.002, 1e-3);   // lr = 0.005 -> 89 % accuracy
     Accuracy_Regression accuracy;
     
     // jumping back and forth in accuracy during neural network training can indicate that the learning rate might be too high. 
