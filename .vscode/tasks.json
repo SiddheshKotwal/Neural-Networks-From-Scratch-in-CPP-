@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-Ofast",
+                "-march=native",
+                "-ftree-vectorize",
+                "-flto",
+                "-fopenmp",
+                "-funroll-loops",
+                "-fomit-frame-pointer",
+                "-I", "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\\Include",
+                "-I", "c:\\users\\lenovo\\appdata\\local\\packages\\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\\localcache\\local-packages\\python39\\site-packages\\numpy\\_core\\include",
+                "-L", "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\\libs",
+                "-o", "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${file}",
+                "-lPython39"  // Ensure this is last
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}

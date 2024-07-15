@@ -1,25 +1,35 @@
-void create_data(MatrixXd& X, VectorXd& y, long long samples, int classes) {
+#include <cmath>
+#include <cstdlib>
+#include <random>
+using namespace std;
 
-    X.resize(samples * classes, 2);
-    y.resize(samples * classes);
+void spiral_data(vector<vector<double>>& X, vector<double>& y, long long samples, int classes){
 
-    // Random number generator for normal distribution
-    mt19937 generator; // Mersenne Twister
-    normal_distribution<double> distribution(0.0, 1.0);
+    X.resize(samples * classes, vector<double>(2, 0));
+    y.resize(samples * classes, 0);
 
-    #pragma omp parallel for
-    for (size_t i = 0; i < classes; i++) {
-        
-        VectorXd random_numbers(samples);
-        for (size_t j = 0; j < samples; ++j)
-            random_numbers(j) = distribution(generator) * 0.2;
+    // Set up the random number generator for normal distribution with mean 0 and variance 1
+    mt19937 gen(0);
+    normal_distribution<> d(0, 1);
 
-        VectorXd r = VectorXd::LinSpaced(samples, 0.0, 1.0);
-        VectorXd t = VectorXd::LinSpaced(samples, i * 4.0, (i + 1) * 4.0) + random_numbers;
+    for(int i = 0; i < classes; i++){
 
-        X.block(i * samples, 0, samples, 1) = r.array() * (t.array() * 2.5).sin();
-        X.block(i * samples, 1, samples, 1) = r.array() * (t.array() * 2.5).cos();
-        
-        y.segment(i * samples, samples).setConstant(i);
+        vector<double> random_numbers(samples, 0);
+        double slices_r = 1.0 / samples, r = 0, t = i * 4.0;
+        double slices_t = (4.0 / samples);
+        long long m = i * samples, n = (i + 1) * samples, k = 0;
+
+        for(int j = 0; j < samples; j++)
+            random_numbers[j] = d(gen) * 0.2;
+
+        for(int j = m; j < n; j++){
+
+            X[j][0] = r * sin((t + random_numbers[k]) * 2.5);
+            X[j][1] = r * cos((t + random_numbers[k]) * 2.5);
+            y[j] = i;
+            r += slices_r;
+            t += slices_t;
+            k++;
+        }
     }
 }

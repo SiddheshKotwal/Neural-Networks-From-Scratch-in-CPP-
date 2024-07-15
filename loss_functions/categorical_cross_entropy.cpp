@@ -1,32 +1,63 @@
-#include "loss.cpp"
+#include "loss_functions.cpp"
 
-class Loss_CategoricalCrossentropy : public Loss{
+class CategoricalCrossentropyLoss : public Loss{
+
     public:
-    MatrixXd dinputs;
+    vector<vector<double>> dinputs;
 
-    VectorXd forward(MatrixXd& y_pred, VectorXd& y_true){
+    // Cross Entropy Loss
+    vector<double> forward(vector<vector<double>>& y_pred, vector<double>& y_true){
 
-        double lower_limit = 1e-7, upper_limit = 1 - 1e-7;
-        MatrixXd clipped = y_pred.cwiseMax(lower_limit).cwiseMin(upper_limit);
-        VectorXd correct_confidences(y_true.rows()), neg_log_likelihoods = correct_confidences;
+        // Clip data to prevent division by 0
+        // Clip both sides to not drag mean towards any value
+        vector<vector<double>> y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7);
+        vector<double> correct_confidences(y_pred.size(), 0), negative_log_likelihoods(y_pred.size(), 0);
 
-        #pragma omp parallel for
-        for(size_t i = 0; i < y_true.rows(); i++)
-            correct_confidences(i) = clipped(i, static_cast<int>(y_true(i)));
-        
-        neg_log_likelihoods = -correct_confidences.array().log();
-        return neg_log_likelihoods;
+        // Getting the confidence values from y_pred by mapping the indexes from y_true
+        // only if categorical/sparse labels -> (1, 2, 3)
+        for(int i = 0; i < y_pred.size(); i++)
+            correct_confidences[i] = y_pred[i][y_true[i]];
+            
+        // Losses
+        negative_log_likelihoods = np.negative_log(correct_confidences);
+        return negative_log_likelihoods; // Predicted Sample Losses
     }
 
-    void backward(MatrixXd& dvalues, VectorXd& y_true){
+    // Cross Entropy Loss
+    // Function overloaded for one-hot encoded vector 
+    vector<double> forward(vector<vector<double>>& y_pred, vector<vector<double>>& y_true){
 
-        this->dinputs = dvalues; // same size
-        MatrixXd one_hot_y_true = MatrixXd::Zero(dvalues.rows(), dvalues.cols());
+        // Clip data to prevent division by 0
+        // Clip both sides to not drag mean towards any value
+        vector<vector<double>> y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7);
+        vector<double> correct_confidences(y_pred.size(), 0), negative_log_likelihoods(y_pred.size(), 0);
 
-        #pragma omp parallel for
-        for (size_t i = 0; i < dvalues.rows(); i++)
-            this->dinputs(i, static_cast<int>(y_true(i))) = -1.0 / dvalues(i, static_cast<int>(y_true(i)));
-        
-        this->dinputs = this->dinputs / dvalues.rows();
+        // Mask values - only for one-hot encoded labels
+        for(int i = 0; i < y_pred.size(); i++){
+            for(int j = 0; j < y_pred[0].size(); j++)
+                if(y_true[i][j] == 1) correct_confidences[i] = y_pred[i][j];
+        }
+
+        negative_log_likelihoods = np.negative_log(correct_confidences);
+        return negative_log_likelihoods; // Predicted Sample losses
+    }
+
+    // Backward Pass for sparse labels
+    void backward(vector<vector<double>>& dvalues, vector<double>& y_true){
+
+        vector<vector<double>> one_hot(dvalues.size(), vector<double>(dvalues[0].size(), 0));
+        this->dinputs.resize(dvalues.size(), vector<double>(dvalues[0].size(), 0)); // dim(number of samples, number of output neurons)
+        // labels are sparse, turn them into one-hot vector
+        for(int i = 0; i < one_hot.size(); i++)
+            one_hot[i][y_true[i]] = 1;
+
+        // Gradient of cross entropy loss function with respect to the y_hat
+        for(int i = 0; i < one_hot.size(); i++)
+            this->dinputs[i][y_true[i]] = -1 * (one_hot[i][y_true[i]] / dvalues[i][y_true[i]]);
+
+        // Normalize the gradients by dividing by the number of samples to ensure that their magnitude 
+        // is independent of the dataset size, making it easier to adjust the learning rate effectively.
+        for(int i = 0; i < one_hot.size(); i++)
+            this->dinputs[i][y_true[i]] = this->dinputs[i][y_true[i]] / dvalues.size();
     }
 };
