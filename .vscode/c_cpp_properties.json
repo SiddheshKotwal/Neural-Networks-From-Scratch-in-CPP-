@@ -5,8 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\\Include",
-                "C:\\Users\\Lenovo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python39\\site-packages\\numpy\\core\\include",
-                "C:\\opencv\\build\\include"
+                "C:\\Users\\Lenovo\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python39\\site-packages\\numpy\\core\\include"
             ],
             "defines": [
                 "_DEBUG",
