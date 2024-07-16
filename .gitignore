@@ -1,0 +1,5 @@
+# ignore all .exe files
+*.exe
+
+# ignore the entire directory
+"A Real Dataset/fashion_mnist_images/"
