@@ -36,5 +36,9 @@
         "streambuf": "cpp",
         "typeinfo": "cpp"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**",
+        "C:/opencv/build/include" // Add OpenCV include path
+    ]
 }
