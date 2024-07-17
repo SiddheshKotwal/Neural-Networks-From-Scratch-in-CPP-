@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 project(ARealDataset)
 
+set(CMAKE_WIN32_EXECUTABLE OFF)
+
 # Set OpenCV path
 set(OpenCV_DIR "C:/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/x64/mingw/lib")
 
@@ -15,8 +17,8 @@ link_directories(
     "C:/Program Files/WindowsApps/PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0/libs"
 )
 
-# Find OpenCV
-find_package(OpenCV REQUIRED)
+# Find OpenMP
+find_package(OpenMP REQUIRED)
 
 # Default source file
 set(SOURCE_FILE "main.cpp")
@@ -29,8 +31,11 @@ endif()
 # Add executable
 add_executable(MyProject ${SOURCE_FILE})
 
+# Find OpenCV
+find_package(OpenCV REQUIRED)
+
 # Link OpenCV and Python libraries
-target_link_libraries(MyProject ${OpenCV_LIBS} Python39)  # Adjust Python version as necessary
+target_link_libraries(MyProject PUBLIC OpenMP::OpenMP_CXX ${OpenCV_LIBS} Python39)  # Adjust Python version as necessary
 
 # Set additional compiler options
 set_target_properties(MyProject PROPERTIES

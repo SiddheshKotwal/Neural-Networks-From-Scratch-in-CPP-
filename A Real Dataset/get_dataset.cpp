@@ -1,24 +1,44 @@
 #include "F:\Codes\Neural Networks From Scratch\Github Repo\Neural-Networks-From-Scratch-in-CPP\common_includes.h"
 #include <opencv2/opencv.hpp>
+#include <filesystem>
+namespace fs = std::filesystem;
 
-int main() {
-    cv::Mat image = cv::imread("F:/Codes/Neural Networks From Scratch/Github Repo/A Real Dataset/fashion_mnist_images/train/7/0002.png", cv::IMREAD_UNCHANGED);
-    if (image.empty()) {
-        std::cerr << "Could not open or find the image!" << std::endl;
-        return -1;
+void load_mnist_dataset(vector<vector<vector<double>>>& X, vector<double>& y, string dataset, string path){
+
+    string directoryPath = path + dataset;
+
+    try {
+        for (auto& entry : fs::directory_iterator(directoryPath)) {
+            if (fs::is_directory(entry)) {
+                double label = stod(entry.path().filename().string());
+                cout<<(int)label<<" ";
+                for(auto& file_entry : fs::directory_iterator(entry.path())) {
+                    if (fs::is_regular_file(file_entry)) {
+                        cv::Mat img = cv::imread(file_entry.path().string(), cv::IMREAD_UNCHANGED);
+                        vector<vector<double>> matrix(img.rows, vector<double>(img.cols, 0));
+                        #pragma omp parallel for
+                        for(int i = 0; i < img.rows; i++){
+                            for(int j = 0; j < img.cols; j++)
+                                matrix[i][j] = static_cast<double>(img.at<uchar>(i, j));
+                        }
+
+                        #pragma omp critical
+                        {
+                            X.push_back(matrix);
+                            y.push_back(label);
+                        }
+                    }
+                }
+            }
+        }
+    } catch (const fs::filesystem_error& e) {
+        std::cerr << "Filesystem error: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "General error: " << e.what() << std::endl;
     }
+}
 
-    // Check if the image is grayscale or colored
-    if (image.channels() == 1) { // Grayscale
-        plt::imshow(image.data, image.rows, image.cols, 1); // 1 channel
-    } else if (image.channels() == 3) { // RGB
-        plt::imshow(image.data, image.rows, image.cols, 3); // 3 channels
-    } else {
-        std::cerr << "Unsupported image format!" << std::endl;
-        return -1;
-    }
-
-    plt::show();
-
-    return 0;
+void create_data_mnist(vector<vector<vector<double>>>& X, vector<vector<vector<double>>>& X_test, vector<double>& y, vector<double>& y_test, string path){
+    load_mnist_dataset(X, y, "train", path);
+    load_mnist_dataset(X_test, y_test, "test", path);
 }
