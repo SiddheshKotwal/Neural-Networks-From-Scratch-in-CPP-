@@ -2,14 +2,23 @@
 #include <opencv2/opencv.hpp>
 
 int main() {
-
-    cv::Mat image = cv::imread("F:/Codes/Neural Networks From Scratch/Github Repo/A Real Dataset/fashion_mnist_images/train/7/0002.png", cv::IMREAD_UNCHANGED); // Load an image
+    cv::Mat image = cv::imread("F:/Codes/Neural Networks From Scratch/Github Repo/A Real Dataset/fashion_mnist_images/train/7/0002.png", cv::IMREAD_UNCHANGED);
     if (image.empty()) {
         std::cerr << "Could not open or find the image!" << std::endl;
         return -1;
     }
-    // cout<<image<<" \n";
-    cv::imshow("Display window", image); // Show the image in a window
-    cv::waitKey(0); // Wait for a keystroke in the window
+
+    // Check if the image is grayscale or colored
+    if (image.channels() == 1) { // Grayscale
+        plt::imshow(image.data, image.rows, image.cols, 1); // 1 channel
+    } else if (image.channels() == 3) { // RGB
+        plt::imshow(image.data, image.rows, image.cols, 3); // 3 channels
+    } else {
+        std::cerr << "Unsupported image format!" << std::endl;
+        return -1;
+    }
+
+    plt::show();
+
     return 0;
 }
