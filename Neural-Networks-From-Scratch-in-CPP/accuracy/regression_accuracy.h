@@ -14,19 +14,18 @@
 #include <omp.h>
 using namespace std;
 
-class Accuracy_Regression {
+class Accuracy_Regression : public Accuracy{
 public:
-    double calculate(vector<vector<double>>& y_pred, vector<vector<double>>& y_true) {
+    void compare(vector<vector<double>>& y_pred, vector<vector<double>>& y_true) {
         numpy np;
-        double accuracy_precision = np.stddev(y_true) / 250, total = 0;
+        double accuracy_precision = np.stddev(y_true) / 250;
+        this->comparisons.resize(y_true.size(), 0);
 
         // Calculating accuracy in parallel
-        #pragma omp parallel for reduction(+:total)
         for (int i = 0; i < y_pred.size(); i++) {
-            if (abs(y_pred[i][0] - y_true[i][0]) < accuracy_precision) total++;
+            if (abs(y_pred[i][0] - y_true[i][0]) < accuracy_precision) this->comparisons[i] = 1;
+            else this->comparisons[i] = 0;
         }
-
-        return total / y_pred.size();
     }
 };
 

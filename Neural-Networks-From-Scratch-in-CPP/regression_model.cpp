@@ -59,7 +59,8 @@ int main(){
         // To calculate it we're taking absolute difference between
         // predictions and ground truth values and compare if differences
         // are lower than given precision value
-        double acc = accuracy.calculate(activation3.output, y);
+        accuracy.compare(activation3.output, y);
+        double acc = accuracy.calculate();
         if(!(i % 100)) cout<<"epoch: "<<i<<", acc: "<<acc<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
 
         // Backward pass

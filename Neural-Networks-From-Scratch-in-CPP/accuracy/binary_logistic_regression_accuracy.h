@@ -14,22 +14,21 @@
 #include <omp.h>
 using namespace std;
 
-class Accuracy_Logistic_Regression {
+class Accuracy_Logistic_Regression : public Accuracy{
 public:
-    double calculate(vector<vector<double>>& predictions, vector<vector<double>>& y_true) {
+    void compare(vector<vector<double>>& predictions, vector<vector<double>>& y_true) {
         vector<vector<double>> pred;
-        double total = 0, accuracy_ = 0;
+        double total = 0;
+        this->comparisons_.resize(y_true.size(), vector<double>(y_true[0].size(), 0));
         pred = predictions;
 
         for (int i = 0; i < pred.size(); i++) {
             for (int j = 0; j < pred[0].size(); j++) {
                 pred[i][j] = (predictions[i][j] > 0.5) ? 1 : 0;
-                if (pred[i][j] == y_true[i][j]) total++;
+                if (pred[i][j] == y_true[i][j]) this->comparisons_[i][j] = 1;
+                else this->comparisons_[i][j] = 0;
             }
         }
-
-        accuracy_ = total / (pred.size() * pred[0].size());
-        return accuracy_;
     }
 };
 

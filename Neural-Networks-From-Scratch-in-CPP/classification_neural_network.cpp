@@ -64,7 +64,8 @@ int main(){
         double loss = data_loss + reg_loss;
 
         // Calculate accuracy from output of activation2 and targets
-        double accuracy_ = accuracy.calculate(loss_activation.output, y);
+        accuracy.compare(loss_activation.output, y);
+        double accuracy_ = accuracy.calculate();
 
         if(!(i % 100)) cout<<"epoch: "<<i<<", acc: "<<accuracy_<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
         // lower loss is not always associated with higher accuracy
@@ -112,7 +113,8 @@ int main(){
     double data_loss = loss_activation.forward(dense2.output, y_test);
     double reg_loss = loss_activation.loss_function.regularization_loss(dense1) + loss_activation.loss_function.regularization_loss(dense2);
     double loss = data_loss + reg_loss;
-    double val_accuracy = accuracy.calculate(loss_activation.output, y_test);
+    accuracy.compare(loss_activation.output, y_test);
+    double val_accuracy = accuracy.calculate();
     cout<<"Validation, acc: "<<val_accuracy<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<"\n";
     
     return 0;

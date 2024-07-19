@@ -83,7 +83,8 @@ int main(){
 
     // Calculating Accuracy of the neural network
     Accuracy_Categorical accuracy;
-    double accuracy_ = accuracy.calculate(loss_activation.output, y);
+    accuracy.compare(loss_activation.output, y);
+    double accuracy_ = accuracy.calculate();
     cout<< "Accuracy: " << accuracy_ << "\n" ;
 
     // Backward pass

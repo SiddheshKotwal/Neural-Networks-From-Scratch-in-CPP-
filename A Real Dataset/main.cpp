@@ -24,10 +24,10 @@ int main() {
     // Data Loading
     create_data_mnist(X, X_test, y, y_test, "F:\\Codes\\Neural Networks From Scratch\\Github Repo\\A Real Dataset\\fashion_mnist_images\\");
     
-    cout << X.size() << " " << X[0].size() << " " << X[0][0].size() << "\n";
+    cout <<"\nTraining Set" << X.size() << " " << X[0].size() << " " << X[0][0].size() << "\n";
     cout<<y.size()<<"\n";
     for(int i = 0; i < X.size(); i += 6000) cout<<y[i]<<"\n";
-    cout << X_test.size() << X_test[0].size() << X_test[0][0].size()<<"\n";
+    cout << X_test.size() <<" " << X_test[0].size() <<" " << X_test[0][0].size()<<"\n";
     cout <<y_test.size()<<"\n";
     
     // Data Preprocessing
@@ -55,8 +55,8 @@ int main() {
         X_test_reshaped.push_back(temp);
     }
 
-    cout<<X_reshaped.size() << X_reshaped[0].size()<<"\n";
-    cout<<X_test_reshaped.size() << X_test_reshaped[0].size()<<"\n";
+    cout<<X_reshaped.size() <<" " << X_reshaped[0].size()<<"\n";
+    cout<<X_test_reshaped.size() <<" " << X_test_reshaped[0].size()<<"\n";
 
     // There are neural network models called convolutional neural networks that will allow you
     // to pass 2D image data “as is,” but a dense neural network like we have here expects samples that
@@ -94,6 +94,110 @@ int main() {
     plt::imshow(temp_2d.data(), 28, 28, 1); // The image might be looking slightly different because we scaled the data and then shuffled it.
     plt::show();
     cout<<"label after shuffling: "<< y[4]<<"\n";
+    // Actually first shuffling then scaling of dataset is common
+
+    // Batches
+    // Common batch sizes range between 32 and 128 samples. Traning large batch sizes will become slow compared to the speed
+    // achievable with smaller batch sizes. Each batch of samples being trained is referred to as a step. We can calculate the number
+    // of steps by dividing the number of samples by the batch size
+
+    // This is the number of iterations that we’ll be making per epoch in a loop. If there are some straggler samples left over, 
+    // we can add them in by simply adding one more step. We will be calculating loss and accuracy for each step and epoch.
+
+    int batch_size = 128;
+    int train_steps = X.size() / batch_size;
+    int validation_steps = X_test.size() / batch_size;
+    long long epoch = 10;
+
+    Layer_Dense dense1(X_shuffled[0].size(), 64);   // (784, 64)
+    Activation_ReLU activation1, activation2;
+    Layer_Dense dense2(64, 64);
+    Layer_Dense dense3(64, 10);
+    Activation_Softmax_Loss_CategoricalCrossentropy loss_activation;
+    Accuracy_Categorical accuracy;
+    Optimizer_Adam optimizer(0.001, 5e-5);  // (0.001, 1e-3)
+
+    vector<vector<double>> batch_X(batch_size, vector<double>(X_shuffled[0].size()));
+    vector<double> batch_y(batch_size);
+    for(long long i = 0; i < epoch; i++){
+
+        cout<<"epoch "<<i + 1<<":"<<"\n";
+        loss_activation.loss_function.new_pass();
+        accuracy.new_pass();
+
+        for(long long j = 0; j < train_steps; j++){
+            
+            long long k = 0, new_batch_start = batch_size * j, new_batch_end = batch_size * (j + 1);
+            for(long long start = new_batch_start; start < new_batch_end; start++){
+                batch_X[k] = X_shuffled[start];
+                batch_y[k++] = y_shuffled[start];
+            }
+
+            dense1.forward(batch_X);
+            activation1.forward(dense1.output);
+            dense2.forward(activation1.output);
+            activation2.forward(dense2.output);
+            dense3.forward(activation2.output);
+            double data_loss = loss_activation.forward(dense3.output, batch_y);
+            double reg_loss = loss_activation.loss_function.regularization_loss(dense1) + loss_activation.loss_function.regularization_loss(dense2) + loss_activation.loss_function.regularization_loss(dense3);
+            accuracy.compare(loss_activation.output, batch_y);
+            double accuracy_ = accuracy.calculate();
+            double loss = data_loss + reg_loss;
+
+            if(!(j % 100) || j + 1 == train_steps) cout<<"step: "<<j<<", acc: "<<accuracy_<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
+
+            loss_activation.backward(loss_activation.output, batch_y);
+            dense3.backward(loss_activation.dinputs);
+            activation2.backward(dense3.dinputs);
+            dense2.backward(activation2.dinputs);
+            activation1.backward(dense2.dinputs);
+            dense1.backward(activation1.dinputs);
+
+            // Update weights and biases
+            optimizer.pre_update_params();
+            optimizer.update_params(dense1);
+            optimizer.update_params(dense2);
+            optimizer.update_params(dense3);
+            optimizer.post_update_params();
+        }
+
+        double epoch_data_loss = loss_activation.loss_function.calculate_accumulated();
+        double epoch_reg_loss = loss_activation.loss_function.regularization_loss(dense1) + loss_activation.loss_function.regularization_loss(dense2) + loss_activation.loss_function.regularization_loss(dense3);
+        double epoch_loss = epoch_data_loss + epoch_reg_loss;
+        double epoch_accuracy = accuracy.calculate_accumulated();
+
+        // Averaged out loss and accuracy from above training steps
+        cout<<"training"<<", acc: "<<epoch_accuracy<<", loss: "<<epoch_loss<<", data_loss: "<<epoch_data_loss<<", reg_loss: "<<epoch_reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
+
+        // Validation 
+        loss_activation.loss_function.new_pass();
+        accuracy.new_pass();
+
+        double validation_accuracy, validation_loss;
+        for(long long j = 0; j < validation_steps; j++){
+            
+            long long k = 0, new_batch_start = batch_size * j, new_batch_end = batch_size * (j + 1);
+            for(long long start = new_batch_start; start < new_batch_end; start++){
+                batch_X[k] = X_test_reshaped[start];
+                batch_y[k++] = y_test[start];
+            }
+
+            dense1.forward(batch_X);
+            activation1.forward(dense1.output);
+            dense2.forward(activation1.output);
+            activation2.forward(dense2.output);
+            dense3.forward(activation2.output);
+
+            loss_activation.forward(dense3.output, batch_y);
+            accuracy.compare(loss_activation.output, batch_y);
+            accuracy.calculate();
+            validation_loss = loss_activation.loss_function.calculate_accumulated();
+            validation_accuracy = accuracy.calculate_accumulated();
+        }
+
+        // Averaged out loss and accuracy from above validation steps
+        cout<<"validation"<<", acc: "<<validation_accuracy<<", loss: "<<validation_loss<<"\n";
+    }
 
     return 0;
 }

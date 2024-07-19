@@ -56,10 +56,15 @@ class Loss{
 
     public:
     numpy np;
+    double accumulated_sum, accumulated_count;
 
     // Calculate mean Losses
     double calculate(vector<double>& sample_losses){
+
         double data_loss = np.mean(sample_losses);
+        for(int i = 0; i < sample_losses.size(); i++)
+            this->accumulated_sum += sample_losses[i];
+        this->accumulated_count += sample_losses.size();
         return data_loss;
     }
 
@@ -107,6 +112,16 @@ class Loss{
         }
 
         return regularization_loss;
+    }
+
+    // sample-wise average for overall loss
+    double calculate_accumulated(){
+        return this->accumulated_sum / this->accumulated_count;
+    }
+
+    // Reset variables for accumulated loss
+    void new_pass(){
+        this->accumulated_count = this->accumulated_sum = 0;
     }
 };
 

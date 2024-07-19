@@ -31,6 +31,7 @@
 #include "loss_functions/mean_squared_error.h"
 #include "loss_functions/mean_absolute_error.h"
 #include "classifier/softmax_classifier.h"
+#include "accuracy/calculate_accuracy.h"
 #include "accuracy/binary_logistic_regression_accuracy.h"
 #include "accuracy/categorical_accuracy.h"
 #include "accuracy/regression_accuracy.h"

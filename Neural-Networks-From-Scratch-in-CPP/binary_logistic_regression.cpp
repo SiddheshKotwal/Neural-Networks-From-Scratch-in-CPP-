@@ -34,7 +34,8 @@ int main(){
         double data_loss = loss_function.calculate(sample_loss);
         double reg_loss = loss_function.regularization_loss(dense1) + loss_function.regularization_loss(dense2);
         double loss = data_loss + reg_loss;
-        double accuracy_ = accuracy.calculate(activation2.output, y_resized);
+        accuracy.compare(activation2.output, y_resized);
+        double accuracy_ = accuracy.calculate();
 
         if(!(i % 100)) cout<<"epoch: "<<i<<", acc: "<<accuracy_<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<", lr: "<<optimizer.current_learning_rate<<"\n";
 
@@ -66,7 +67,8 @@ int main(){
     double data_loss = loss_function.calculate(sample_loss);
     double reg_loss = loss_function.regularization_loss(dense1) + loss_function.regularization_loss(dense2);
     double loss = data_loss + reg_loss;
-    double accuracy_ = accuracy.calculate(activation2.output, y_test_resized);
+    accuracy.compare(activation2.output, y_test_resized);
+    double accuracy_ = accuracy.calculate();
     cout<<"Validation, acc: "<<accuracy_<<", loss: "<<loss<<", data_loss: "<<data_loss<<", reg_loss: "<<reg_loss<<"\n";
     
     return 0;

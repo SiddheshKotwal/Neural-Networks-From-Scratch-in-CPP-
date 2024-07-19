@@ -14,6 +14,9 @@ int main(){
     vector<vector<double>> X(samples * classes, vector<double>(2, 0));
     vector<double> y(samples * classes, 0);
 
+    mt19937 randm(0);
+    normal_distribution<double> distribute(0, 1);
+
     // Create Dataset
     // vertical_data(X, y, samples, classes);
     spiral_data(X, y, samples, classes);
@@ -39,22 +42,22 @@ int main(){
         // Generate a new set of weights for iteration
         for(int i = 0; i < dense1.weights.size(); i++){
             for(int j = 0; j < dense1.weights[0].size(); j++)
-                dense1.weights[i][j] += dist(rng) * 0.05;
+                dense1.weights[i][j] += distribute(randm) * 0.05;
         }
 
         for(int i = 0; i < dense1.biases.size(); i++){
             for(int j = 0; j < dense1.biases[0].size(); j++)
-                dense1.biases[i][j] += dist(rng) * 0.05;
+                dense1.biases[i][j] += distribute(randm) * 0.05;
         }
 
         for(int i = 0; i < dense2.weights.size(); i++){
             for(int j = 0; j < dense2.weights[0].size(); j++)
-                dense2.weights[i][j] += dist(rng) * 0.05;
+                dense2.weights[i][j] += distribute(randm) * 0.05;
         }
 
         for(int i = 0; i < dense2.biases.size(); i++){
             for(int j = 0; j < dense2.biases[0].size(); j++)
-                dense2.biases[i][j] += dist(rng) * 0.05;
+                dense2.biases[i][j] += distribute(randm) * 0.05;
         }
 
         // Perform a forward pass of the training data through this layer
@@ -70,7 +73,8 @@ int main(){
 
         // Calculate accuracy from output of activation2 and targets
         // calculate values along first axis
-        double accuracy_ = accuracy.calculate(activation2.output, y);
+        accuracy.compare(activation2.output, y);
+        double accuracy_ = accuracy.calculate();
 
         // If loss is smaller - print and save weights and biases aside
         if(loss < lowest_loss){
