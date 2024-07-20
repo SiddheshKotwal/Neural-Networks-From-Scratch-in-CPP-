@@ -8,6 +8,9 @@
 // cmake --build . 
 // ./MyProgram.exe
 
+// While we can save and load model parameter values, we still need to define the model. It must be
+// the exact configuration as the model that we’re importing parameters from
+
 int main(){
 
     vector<vector<vector<double>>> X_test, X;

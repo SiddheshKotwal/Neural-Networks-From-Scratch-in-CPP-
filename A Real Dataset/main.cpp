@@ -219,5 +219,13 @@ int main() {
     save_parameters(parameters, "F:/Codes/Neural Networks From Scratch/Github Repo/A Real Dataset/fashion_mnist.parms");
     cout<<"parameters saved successfully!\n";
 
+    // With saved weights, we can, for example, initialize a model with those weights, trained from similar data, and then train that
+    // model to work with our specific data. This is called transfer learning. Weights can be used to visualize the model, 
+    // identify dead neurons, implement more complicated models (like reinforcement learning, where weights collected
+    // from multiple models are committed to a single network)
+
+    // Saving the model. We need to create a model class to save it but as we have not created model class we can't save it completely and
+    // saving individual subclasses of model becomes so complicated we will be just implementing the saving and loading of parameters.
+    
     return 0;
 }
