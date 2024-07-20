@@ -1,6 +1,7 @@
 #include "F:\Codes\Neural Networks From Scratch\Github Repo\Neural-Networks-From-Scratch-in-CPP\common_includes.h"
 #include <opencv2/opencv.hpp>
 #include "get_dataset.cpp"
+#include "get_set_params.cpp"
 
 // Ensure that both training and testing data are scaled using identical methods. 
 // Preprocessing rules should be derived solely from the training dataset. Any preprocessing rules 
@@ -24,7 +25,7 @@ int main() {
     // Data Loading
     create_data_mnist(X, X_test, y, y_test, "F:\\Codes\\Neural Networks From Scratch\\Github Repo\\A Real Dataset\\fashion_mnist_images\\");
     
-    cout <<"\nTraining Set" << X.size() << " " << X[0].size() << " " << X[0][0].size() << "\n";
+    cout <<"\nTraining Set: " << X.size() << " " << X[0].size() << " " << X[0][0].size() << "\n";
     cout<<y.size()<<"\n";
     for(int i = 0; i < X.size(); i += 6000) cout<<y[i]<<"\n";
     cout << X_test.size() <<" " << X_test[0].size() <<" " << X_test[0][0].size()<<"\n";
@@ -106,8 +107,11 @@ int main() {
 
     int batch_size = 128;
     int train_steps = X.size() / batch_size;
+    if(batch_size * train_steps != X.size()) train_steps++;
+
     int validation_steps = X_test.size() / batch_size;
-    long long epoch = 10;
+    if(batch_size * validation_steps != X_test.size()) validation_steps++;
+    long long epoch = 5;
 
     Layer_Dense dense1(X_shuffled[0].size(), 64);   // (784, 64)
     Activation_ReLU activation1, activation2;
@@ -115,7 +119,7 @@ int main() {
     Layer_Dense dense3(64, 10);
     Activation_Softmax_Loss_CategoricalCrossentropy loss_activation;
     Accuracy_Categorical accuracy;
-    Optimizer_Adam optimizer(0.001, 5e-5);  // (0.001, 1e-3)
+    Optimizer_Adam optimizer(0.001, 1e-3);  // (0.001, 1e-3)
 
     vector<vector<double>> batch_X(batch_size, vector<double>(X_shuffled[0].size()));
     vector<double> batch_y(batch_size);
@@ -197,7 +201,23 @@ int main() {
 
         // Averaged out loss and accuracy from above validation steps
         cout<<"validation"<<", acc: "<<validation_accuracy<<", loss: "<<validation_loss<<"\n";
+
+        // If we have out of sample data we can run our validation code on it to evaluate our model's final loss and accuracy,
+        // as we have used test set for validation we don't have dataset for evaluation.
+        // We will often train a model tweak it's hyperparameters, train it all over again and so on using 
+        // training and validation data. Then, whenever we find the model and hyperparameters that appear 
+        // to perform the best, we’ll use that model on testing data and, in the future, to make predictions in production.
     }
+
+    // Saving the Parameters
+    vector<Layer_Dense> layer_params;
+    layer_params.push_back(dense1);
+    layer_params.push_back(dense2);
+    layer_params.push_back(dense3);
+
+    vector<tuple<vector<vector<double>>, vector<vector<double>>>> parameters = get_parameters(layer_params);
+    save_parameters(parameters, "F:/Codes/Neural Networks From Scratch/Github Repo/A Real Dataset/fashion_mnist.parms");
+    cout<<"parameters saved successfully!\n";
 
     return 0;
 }

@@ -36,6 +36,7 @@ void load_mnist_dataset(vector<vector<vector<double>>>& X, vector<double>& y, st
     } catch (const std::exception& e) {
         std::cerr << "General error: " << e.what() << std::endl;
     }
+    cout<<"\n";
 }
 
 void create_data_mnist(vector<vector<vector<double>>>& X, vector<vector<vector<double>>>& X_test, vector<double>& y, vector<double>& y_test, string path){

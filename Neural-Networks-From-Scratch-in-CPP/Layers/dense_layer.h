@@ -152,6 +152,14 @@ class Layer_Dense{
         // we need this in multiple layers because these will be the outputs of previous layer whose gradients are required. 
         // Dimensions of dinputs will be same as of dimensions of inputs matrix to this layer or output matrix of previous layer
     }
+
+    tuple<vector<vector<double>>, vector<vector<double>>> get_parameters(){
+        return make_tuple(this->weights, this->biases);
+    }
+
+    void set_parameters(tuple<vector<vector<double>>, vector<vector<double>>>& parameters){
+        tie(this->weights, this->biases) = parameters;
+    }
 };
 
 #endif

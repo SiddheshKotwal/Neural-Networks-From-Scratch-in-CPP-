@@ -11,6 +11,7 @@ include_directories(
     ${OpenCV_DIR}/include
     "C:/Program Files/WindowsApps/PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0/Include"
     "C:/users/lenovo/appdata/local/packages/pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0/localcache/local-packages/python39/site-packages/numpy/_core/include"
+    "F:/Codes/Neural Networks From Scratch/Github Repo/cereal-1.3.2/include"
 )
 
 link_directories(
