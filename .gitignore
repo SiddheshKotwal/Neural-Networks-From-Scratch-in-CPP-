@@ -4,3 +4,5 @@
 # ignore the entire directory
 A Real Dataset/fashion_mnist_images/
 build/
+cereal-1.3.2/
+A Real Dataset/cereal/
