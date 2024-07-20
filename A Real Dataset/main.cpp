@@ -224,8 +224,12 @@ int main() {
     // identify dead neurons, implement more complicated models (like reinforcement learning, where weights collected
     // from multiple models are committed to a single network)
 
-    // Saving the model. We need to create a model class to save it but as we have not created model class we can't save it completely and
-    // saving individual subclasses of model becomes so complicated we will be just implementing the saving and loading of parameters.
-    
+    // Saving the model
+    // We need to create a model class to save it but as we have not created model class we can't save it completely and
+    // saving individual subclasses of model becomes so complicated. So, we will be just implementing the saving and loading of parameters.
+    // Saving model should consist of only important properties except the object attributes such as inputs, output, dinputs, dweights,
+    // dbiases for all classes. We just need to save the data which we require to start the optimization process again from previous
+    // checkpoint and the metrics to evaluate and monitor the training process continuing from previous checkpoint like loss, accuracy, etc.
+
     return 0;
 }
