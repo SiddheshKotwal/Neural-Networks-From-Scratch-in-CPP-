@@ -57,11 +57,14 @@ Evaluations are performed using generated datasets, including spiral, vertical, 
 This directory contains code for testing the classification neural network on the Fashion MNIST dataset:
 
 - **Dataset**: Fashion MNIST
-- **Description**: Consists of 60,000 training samples and 10,000 test samples, each a 28x28 grayscale image of a fashion item (e.g., shirt, dress, sneaker). It serves as a challenging replacement for the MNIST dataset.
+- **Description**: Consists of 60,000 training samples and 10,000 test samples, each a 28x28 grayscale image of a fashion item (e.g., shirt, dress, sneaker). It serves as a challenging replacement for the MNIST dataset. Remeber to unzip the dataset.
 
 #### Setup and Compilation
 
-1. **Install Required Tools and Libraries:**
+1. **Unzip the Dataset:**
+   - Ensure to unzip the dataset file included in the repository before proceeding. The dataset is provided in a zip file and needs to be extracted to the same directory.
+
+2. **Install Required Tools and Libraries:**
 
    - **MSYS2 and MinGW-w64:**
      1. Install MSYS2.
@@ -76,7 +79,7 @@ This directory contains code for testing the classification neural network on th
      1. Unzip the Cereal library.
      2. Add Cereal include path to the CMake file.
 
-2. **Compile Using CMake:**
+3. **Compile Using CMake:**
 
    1. Create and navigate to the `build` directory:
       ```bash
