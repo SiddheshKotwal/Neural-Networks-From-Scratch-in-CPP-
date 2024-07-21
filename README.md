@@ -39,14 +39,14 @@ This directory contains implementations for:
 ### Setup and Compilation
 
 1. **Place the `.vscode` Directory:**
-   - Ensure the `.vscode` directory is in the parent directory of your project directory.
+   - Ensure the `.vscode` directory is in the parent directory of your project directory i.e. "Neural-Networks-From-Scratch-in-CPP" and "A Real Dataset".
 
 2. **Configuration:**
-   - Make sure include, bin, and linking paths for necessary libraries (e.g., NumPy, Python, OpenCV, Cereal) are correctly set in the `.vscode` and CMake files.
+   - Make sure include, bin, and linking paths for necessary libraries (e.g., NumPy, Python, OpenCV, Cereal) are correctly set in the `.vscode`, CMake files and also necessary bin paths in system environment variables.
 
 3. **Compile and Run:**
    - Use `Ctrl + Shift + B` in VSCode to build the project.
-   - For applications using `matplotlibcpp`, update the `run_my_app.bat` file with the `.cpp` filename and execute `./run_my_app`.
+   - For applications using `matplotlibcpp`, update the `run_my_app.bat` file with the `.cpp` filename in .bat file and execute `./run_my_app`.
    - For applications not using `matplotlibcpp`, simply run `./filename`.
 
 ---
@@ -90,12 +90,17 @@ This directory tests the classification neural network on the Fashion MNIST data
       cmake -DSOURCE_FILE_ARG="your_filename.cpp" -G "MinGW Makefiles" ..
       ```
 
-   3. Build the project:
+   3. Delete `CMakeCache.txt` to ensure a clean build for new files:
+        ```bash
+        del CMakeCache.txt
+        ```
+
+   4. Build the project:
       ```bash
       cmake --build .
       ```
 
-   4. Navigate to the executable directory and run:
+   5. Navigate to the executable directory and run:
       ```bash
       cd "A real dataset"
       ./run_my_plot (if using matplotlibcpp)
@@ -115,6 +120,18 @@ The following files are used for configuration:
 - **`CMakeLists.txt`**: CMake configuration file for setting up the project, finding libraries, and specifying compiler options.
 
 For detailed paths and settings, refer to the respective configuration files included in the repository.
+
+### Important Note
+
+Ensure to check and verify all paths inside these configuration files. Paths for include directories, libraries, and executables should be updated to reflect your local setup.
+
+When compiling new files, remember to delete `CMakeCache.txt` to avoid conflicts and ensure a clean build.
+
+---
+
+## Acknowledgments
+
+This project was implemented based on concepts and methodologies from the book **"Neural Networks from Scratch in Python"**. The book provides foundational understanding of neural networks, and this implementation translates those principles into C++.
 
 ---
 
