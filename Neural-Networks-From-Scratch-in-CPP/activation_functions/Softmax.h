@@ -106,6 +106,10 @@ class Activation_Softmax{
             this->dinputs[i] = vec[0]; // storing sample gradients as rows            
         }
     }
+
+    vector<double> predictions(){
+        return np.argmax(output);
+    }
 };
 
 #endif

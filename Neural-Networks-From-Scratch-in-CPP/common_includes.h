@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <vector>
 #include <tuple>
+#include <map>
 #include <cmath>
 #include <algorithm>
 #include <numeric>

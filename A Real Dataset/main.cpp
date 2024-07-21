@@ -15,6 +15,12 @@
 // In case where we are scaling by considering the values in training dataset/ only informing transformations based on training dataset 
 // which is the correct method of scaling except when we use some constant to scale linearly in that case we scale train and test dataset by same constant
 
+// Commands to run the project
+// cmake -G "MinGW Makefiles" ..
+// cmake --build .
+// ./run_my_plot (incase of use of matplotlibcpp) or
+// ./MyProgram.exe
+
 int main() {
 
     vector<vector<vector<double>>> X, X_test;
@@ -92,7 +98,7 @@ int main() {
     // If the model does not train or appears to be misbehaving, you will want to double-check how you preprocessed the data.
     // check if the shuffling is correct or not
     for(int i = 0; i < X_shuffled[0].size(); i++) temp_2d.push_back(static_cast<unsigned char>(round((X_shuffled[4][i] * 127.5) + 127.5)));
-    plt::imshow(temp_2d.data(), 28, 28, 1); // The image might be looking slightly different because we scaled the data and then shuffled it.
+    plt::imshow(temp_2d.data(), 28, 28, 1, {{"cmap", "gray"}}); // The image might be looking slightly different because we scaled the data and then shuffled it.
     plt::show();
     cout<<"label after shuffling: "<< y[4]<<"\n";
     // Actually first shuffling then scaling of dataset is common
@@ -111,7 +117,7 @@ int main() {
 
     int validation_steps = X_test.size() / batch_size;
     if(batch_size * validation_steps != X_test.size()) validation_steps++;
-    long long epoch = 5;
+    long long epoch = 10;
 
     Layer_Dense dense1(X_shuffled[0].size(), 64);   // (784, 64)
     Activation_ReLU activation1, activation2;
