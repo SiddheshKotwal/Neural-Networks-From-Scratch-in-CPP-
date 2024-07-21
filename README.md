@@ -62,7 +62,7 @@ This directory contains code for testing the classification neural network on th
 #### Setup and Compilation
 
 1. **Unzip the Dataset:**
-   - Ensure to unzip the dataset file included in the repository before proceeding. The dataset is provided in a zip file and needs to be extracted to the same directory.
+   - Ensure to unzip the `fashion_mnist_images.zip` file included in the repository. Extract the contents into the same directory where your project files are located.
 
 2. **Install Required Tools and Libraries:**
 
