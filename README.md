@@ -117,7 +117,7 @@ This directory contains code for testing the classification neural network on th
 
 - **`CMakeLists.txt`**: CMake configuration file for project setup, library finding, and compiler options.
 
-Ensure all paths in these configuration files are updated to reflect your local setup. Delete `CMakeCache.txt` when compiling new files to avoid conflicts.
+Ensure all paths in these configuration files are updated to reflect your local setup. Delete `CMakeCache.txt` when compiling new files to avoid conflicts. Some of the required setup files and zip files are included in the repository.
 
 ## Acknowledgments
 
