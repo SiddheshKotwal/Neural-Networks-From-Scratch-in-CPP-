@@ -2,80 +2,79 @@
 
 ## Project Overview
 
-This project includes two main directories:
+This project involves developing neural networks from scratch in C++ and evaluating their performance on various datasets. It is divided into two main sections: 
 
-1. **Neural Networks from Scratch in CPP**
-2. **A Real Dataset**
+1. **Neural Networks from Scratch in C++**: Implementation of various models including classification, binary logistic regression, and regression networks. Models are evaluated using synthetic datasets such as spiral, vertical, and sine data.
 
-These directories cover the implementation and testing of various neural networks.
+2. **A Real Dataset**: Application of the classification network to the Fashion MNIST dataset to demonstrate handling and analysis of real-world data.
 
----
+## Directory Structure
 
-## Directory: Neural Networks from Scratch in CPP
+### Neural Networks from Scratch in C++
 
-### Overview
+#### Overview
 
 This directory contains implementations for:
 
-- **Classification Neural Network**
+- **Classification Neural Network**:
   - **Activation Functions**: ReLU for hidden layers, Softmax for the output layer.
   - **Loss Function**: Categorical Cross-Entropy.
 
-- **Binary Logistic Regression Neural Network**
+- **Binary Logistic Regression Neural Network**:
   - **Activation Functions**: ReLU for hidden layers, Sigmoid for the output layer.
   - **Loss Function**: Binary Cross-Entropy.
 
-- **Regression Neural Network**
+- **Regression Neural Network**:
   - **Activation Functions**: ReLU for hidden layers, Linear activation for the output layer.
   - **Loss Functions**: Mean Squared Error (MSE) or Mean Absolute Error (MAE).
 
-### Optimizers
+#### Optimizers
 
 - Stochastic Gradient Descent (SGD) with Momentum
 - RMSProp
 - AdaGrad
 - Adam
 
-### Setup and Compilation
+Evaluations are performed using generated datasets, including spiral, vertical, and sine data, and accuracy is calculated with distinct techniques for each neural network.
+
+#### Setup and Compilation
 
 1. **Place the `.vscode` Directory:**
-   - Ensure the `.vscode` directory is in the parent directory of your project directory i.e. "Neural-Networks-From-Scratch-in-CPP" and "A Real Dataset".
+   - Ensure the `.vscode` directory is located in the parent directory of "Neural-Networks-From-Scratch-in-CPP" and "A Real Dataset".
 
 2. **Configuration:**
-   - Make sure include, bin, and linking paths for necessary libraries (e.g., NumPy, Python, OpenCV, Cereal) are correctly set in the `.vscode`, CMake files and also necessary bin paths in system environment variables.
+   - Verify include, bin, and linking paths for libraries (e.g., NumPy, Python, OpenCV, Cereal) are correctly set in the `.vscode`, CMake files, and environment variables.
 
 3. **Compile and Run:**
    - Use `Ctrl + Shift + B` in VSCode to build the project.
-   - For applications using `matplotlibcpp`, update the `run_my_app.bat` file with the `.cpp` filename in .bat file and execute `./run_my_app`.
-   - For applications not using `matplotlibcpp`, simply run `./filename`.
+   - For applications using `matplotlibcpp`, update `run_my_app.bat` with the `.cpp` filename and execute `./run_my_app`.
+   - For other applications, run `./filename`.
 
----
+### A Real Dataset
 
-## Directory: A Real Dataset
+#### Overview
 
-### Overview
-
-This directory tests the classification neural network on the Fashion MNIST dataset. 
+This directory contains code for testing the classification neural network on the Fashion MNIST dataset:
 
 - **Dataset**: Fashion MNIST
-- **Description**: Fashion MNIST consists of 60,000 training samples and 10,000 test samples. Each sample is a 28x28 grayscale image of a fashion item, such as a shirt, dress, or sneaker. The dataset is intended to serve as a more challenging replacement for the classic MNIST dataset of handwritten digits.
+- **Description**: Consists of 60,000 training samples and 10,000 test samples, each a 28x28 grayscale image of a fashion item (e.g., shirt, dress, sneaker). It serves as a challenging replacement for the MNIST dataset.
 
-### Setup and Compilation
+#### Setup and Compilation
 
 1. **Install Required Tools and Libraries:**
 
    - **MSYS2 and MinGW-w64:**
      1. Install MSYS2.
      2. Use MSYS2 to install MinGW-w64 with POSIX threads.
-     3. Add the MSYS2 MinGW paths to your environment variables.
+     3. Add MSYS2 MinGW paths to environment variables.
 
    - **OpenCV:**
-     1. Install the MinGW build of OpenCV.
-     2. Add the OpenCV `bin` path to your environment variables.
+     1. Install MinGW build of OpenCV.
+     2. Add OpenCV `bin` path to environment variables.
 
    - **Cereal:**
      1. Unzip the Cereal library.
-     2. Add the Cereal include path to the CMake file.
+     2. Add Cereal include path to the CMake file.
 
 2. **Compile Using CMake:**
 
@@ -90,7 +89,7 @@ This directory tests the classification neural network on the Fashion MNIST data
       cmake -DSOURCE_FILE_ARG="your_filename.cpp" -G "MinGW Makefiles" ..
       ```
 
-   3. Delete `CMakeCache.txt` to ensure a clean build for new files:
+   3. Delete `CMakeCache.txt` for a clean build:
         ```bash
         del CMakeCache.txt
         ```
@@ -107,33 +106,19 @@ This directory tests the classification neural network on the Fashion MNIST data
       ./MyProgram.exe (otherwise)
       ```
 
----
-
 ## Configuration Files
 
-The following files are used for configuration:
-
-- **`.vscode/c_cpp_properties.json`**: Configuration for IntelliSense, including include paths and compiler settings.
+- **`.vscode/c_cpp_properties.json`**: IntelliSense configuration, including include paths and compiler settings.
 - **`.vscode/settings.json`**: VSCode settings for file associations and CMake configuration.
-- **`.vscode/tasks.json`**: Task configuration for building the project using `g++`.
+- **`.vscode/tasks.json`**: Task configuration for building the project with `g++`.
 
-- **`CMakeLists.txt`**: CMake configuration file for setting up the project, finding libraries, and specifying compiler options.
+- **`CMakeLists.txt`**: CMake configuration file for project setup, library finding, and compiler options.
 
-For detailed paths and settings, refer to the respective configuration files included in the repository.
-
-### Important Note
-
-Ensure to check and verify all paths inside these configuration files. Paths for include directories, libraries, and executables should be updated to reflect your local setup.
-
-When compiling new files, remember to delete `CMakeCache.txt` to avoid conflicts and ensure a clean build.
-
----
+Ensure all paths in these configuration files are updated to reflect your local setup. Delete `CMakeCache.txt` when compiling new files to avoid conflicts.
 
 ## Acknowledgments
 
-This project was implemented based on concepts and methodologies from the book **"Neural Networks from Scratch in Python"**. The book provides foundational understanding of neural networks, and this implementation translates those principles into C++.
-
----
+This project is based on concepts from **"Neural Networks from Scratch in Python"**. The book provided foundational understanding of neural networks, and this implementation applies those principles in C++.
 
 ## License
 
