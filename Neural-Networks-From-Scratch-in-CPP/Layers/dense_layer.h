@@ -75,7 +75,7 @@ class Layer_Dense{
         // setting random weights for the neurons by taking random number from gaussian distribution
         for(int i = 0; i < weights.size(); i++){
             for(int j = 0; j < weights[0].size(); j++){
-                weights[i][j] = dist(rng) * 0.1;   // multiply with 0.1 for regression model and for classification 0.01
+                weights[i][j] = dist(rng) * 0.01;   // multiply with 0.1 for regression model and for classification 0.01
                 // — the fraction (0.01) that multiplies the draw from the uniform distribution
                 // depends on the number of inputs and the number of neurons and is not constant like in our case.
                 // This method of initialization is called Glorot uniform.

@@ -2,6 +2,7 @@
 
 // Commands to run this code:
 // g++ regression_model.cpp -I "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\Include" -I "c:\users\lenovo\appdata\local\packages\pythonsoftwarefoundation.python.3.9_qbz5n2kfra8p0\localcache\local-packages\python39\site-packages\numpy\core\include" -L "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.9_3.9.3568.0_x64__qbz5n2kfra8p0\libs" -I "C:\mingw64\mingw64\bin" -lPython39
+// or ctrl + shift + B
 // ./run_my_app
 
 vector<double> get_vector(vector<vector<double>>& vec) {
@@ -23,7 +24,7 @@ int main(){
     Layer_Dense dense3(64, 1);
     Activation_Linear activation3;
     Loss_MeanSquaredError loss_function;
-    Optimizer_Adam optimizer(0.002, 1e-3);   // lr = 0.005 -> 89 % accuracy
+    Optimizer_Adam optimizer(0.002, 1e-3);   // (0.002, 1e-3) -> 90%+ accuracy
     Accuracy_Regression accuracy;
     
     // jumping back and forth in accuracy during neural network training can indicate that the learning rate might be too high. 
